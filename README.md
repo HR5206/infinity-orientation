@@ -1,3 +1,9 @@
+# TODO:
+
+- [ ] Display password of users in the dashboard
+- [ ] Button to delete users in the dashboard
+- [ ] Messaging
+
 # Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
