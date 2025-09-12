@@ -5,10 +5,10 @@
                 <h2
                     class="mt-6 text-center text-3xl font-extrabold text-gray-900"
                 >
-                    Sign in to your account
+                    Create your account
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
-                    Welcome back!
+                    Join the conversation
                 </p>
             </div>
 
@@ -59,8 +59,8 @@
                         "
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        <span v-if="isLoading">Signing in...</span>
-                        <span v-else>Sign In</span>
+                        <span v-if="isLoading">Creating account...</span>
+                        <span v-else>Create Account</span>
                     </button>
                 </div>
 
@@ -79,12 +79,12 @@
 
                 <div class="text-center">
                     <p class="text-sm text-gray-600">
-                        Don't have an account?
+                        Already have an account?
                         <a
-                            href="/register"
+                            href="/login"
                             class="font-medium text-blue-600 hover:text-blue-500"
                         >
-                            Register here
+                            Sign in here
                         </a>
                     </p>
                 </div>
@@ -111,8 +111,8 @@ const handleSubmit = async () => {
     message.value = "";
 
     try {
-        // Call the login API
-        const response = await $fetch("/api/login", {
+        // Call the registration API
+        const response = await $fetch("/api/register", {
             method: "POST",
             body: {
                 username: form.value.username,
@@ -120,19 +120,24 @@ const handleSubmit = async () => {
             },
         });
 
-        message.value = response.message || "Login successful!";
+        message.value = response.message || "Account created successfully!";
         messageType.value = "success";
 
-        console.log("Login successful:", response.user);
+        console.log("Registration successful:", response.user);
 
-        // Redirect to main app after login
+        // Clear form after successful registration
         setTimeout(() => {
+            form.value.username = "";
+            form.value.password = "";
+            message.value = "";
+
+            // Redirect to main app after registration
             navigateTo("/welcome");
-        }, 1000);
+        }, 1500);
     } catch (error) {
-        console.error("Login failed:", error);
+        console.error("Registration failed:", error);
         message.value =
-            error.data?.message || "Login failed. Please try again.";
+            error.data?.message || "Registration failed. Please try again.";
         messageType.value = "error";
     } finally {
         isLoading.value = false;
