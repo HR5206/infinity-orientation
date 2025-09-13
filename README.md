@@ -2,7 +2,6 @@
 
 - [ ] Display password of users in the dashboard
 - [ ] Button to delete users in the dashboard
-- [ ] Messaging
 
 # Nuxt Minimal Starter
 
