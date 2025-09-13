@@ -125,15 +125,22 @@ const handleSubmit = async () => {
 
         console.log("Registration successful:", response.user);
 
-        // Clear form after successful registration
+        // Save current user id in localStorage (client-only)
+        try {
+            if (typeof window !== 'undefined' && window.localStorage && response.user && response.user.id) {
+                localStorage.setItem('currentUserId', response.user.id)
+            }
+        } catch (e) {
+            console.warn('Could not access localStorage', e)
+        }
+
+        // Clear form after successful registration and redirect to messaging
         setTimeout(() => {
             form.value.username = "";
             form.value.password = "";
             message.value = "";
-
-            // Redirect to main app after registration
-            navigateTo("/welcome");
-        }, 1500);
+            navigateTo("/messaging");
+        }, 800);
     } catch (error) {
         console.error("Registration failed:", error);
         message.value =

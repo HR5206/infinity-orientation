@@ -125,10 +125,19 @@ const handleSubmit = async () => {
 
         console.log("Login successful:", response.user);
 
-        // Redirect to main app after login
+        // Save current user id in localStorage (client-only)
+        try {
+            if (typeof window !== 'undefined' && window.localStorage && response.user && response.user.id) {
+                localStorage.setItem('currentUserId', response.user.id)
+            }
+        } catch (e) {
+            console.warn('Could not access localStorage', e)
+        }
+
+        // Redirect to messaging app after login
         setTimeout(() => {
-            navigateTo("/welcome");
-        }, 1000);
+            navigateTo("/messaging");
+        }, 500);
     } catch (error) {
         console.error("Login failed:", error);
         message.value =

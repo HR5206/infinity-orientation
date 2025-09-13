@@ -12,7 +12,8 @@ export default defineEventHandler(async (event) => {
   const safeUsers = users.map((user: any) => ({
     id: user.id,
     username: user.username,
-    registeredAt: user.registeredAt,
+    // storage uses createdAt; expose it as registeredAt for UI
+    registeredAt: user.createdAt,
     lastLogin: user.lastLogin || 'Never'
   }))
   
